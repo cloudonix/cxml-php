@@ -18,10 +18,6 @@
 
 namespace Cloudonix\CXML;
 
-use Cloudonix\CXML\CompoundVerb;
-use Cloudonix\CXML\SimpleVerb;
-use Cloudonix\CXML\Verbs;
-
 final class Response
 {
     private array $payloadArray = [];
@@ -29,8 +25,6 @@ final class Response
 
     /**
      * CXML Response Constructor
-     *
-     *
      */
     public function __construct()
     {
@@ -46,7 +40,7 @@ final class Response
      *
      * @param string $content
      *
-     * @return \Cloudonix\CXML\SimpleVerb
+     * @return SimpleVerb
      */
     public function play(string $content): SimpleVerb
     {
@@ -58,7 +52,7 @@ final class Response
      *
      * @param string $content
      *
-     * @return \Cloudonix\CXML\SimpleVerb
+     * @return SimpleVerb
      */
     public function dial(string $content): SimpleVerb
     {
@@ -68,7 +62,7 @@ final class Response
     /**
      * Add a `<HANGUP>` Verb to CXML Response.
      *
-     * @return \Cloudonix\CXML\SimpleVerb
+     * @return SimpleVerb
      */
     public function hangup(): SimpleVerb
     {
@@ -104,7 +98,7 @@ final class Response
      *
      * @param array $content
      *
-     * @return \Cloudonix\CXML\CompoundVerb
+     * @return CompoundVerb
      */
     public function start(array $content): CompoundVerb
     {
@@ -114,7 +108,7 @@ final class Response
     /**
      * Add a `<PAUSE>` Verb to CXML Response.
      *
-     * @return \Cloudonix\CXML\SimpleVerb
+     * @return SimpleVerb
      */
     public function pause(): SimpleVerb
     {
@@ -126,7 +120,7 @@ final class Response
      *
      * @param array $content
      *
-     * @return \Cloudonix\CXML\CompoundVerb
+     * @return CompoundVerb
      */
     public function record(array $content): CompoundVerb
     {
@@ -136,7 +130,7 @@ final class Response
     /**
      * Add a `<REJECT>` Verb to CXML Response.
      *
-     * @return \Cloudonix\CXML\SimpleVerb
+     * @return SimpleVerb
      */
     public function reject(): SimpleVerb
     {
@@ -146,11 +140,11 @@ final class Response
     /**
      * Append a CXML Verb to CXML Response
      *
-     * @param string $verbName
+     * @param SimpleVerb|CompoundVerb $verbObject
      *
-     * @return \Cloudonix\CXML\SimpleVerb|\Cloudonix\CXML\CompoundVerb|bool
+     * @return SimpleVerb|CompoundVerb|bool
      */
-    private function appendVerb($verbObject): SimpleVerb|CompoundVerb|bool
+    private function appendVerb(SimpleVerb|CompoundVerb $verbObject): SimpleVerb|CompoundVerb|bool
     {
         $this->payloadArray[] = $verbObject;
         return $this->payloadArray[count($this->payloadArray) - 1];
