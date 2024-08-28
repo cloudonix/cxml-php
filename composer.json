@@ -1,0 +1,30 @@
+{
+  "name": "cloudonix/cxml-php",
+  "type": "library",
+  "description": "A PHP Wrapper library for Cloudonix's CXML language",
+  "keywords": [
+	"cloudonix",
+	"cxml",
+	"api",
+	"voice",
+	"ivr",
+	"voiceai"
+  ],
+  "homepage": "https://developers.cloudonix.com",
+  "license": "MIT",
+  "authors": [
+	{
+	  "name": "Nir Simionovich",
+	  "email": "nirs@cloudonix.io"
+	}
+  ],
+  "require": {
+	"php": ">=8.0"
+  },
+  "autoload": {
+	"psr-4": {
+	  "Cloudonix\\": "src/Cloudonix/",
+	  "Cloudonix\\CXML\\": "src/Cloudonix/CXML/"
+	}
+  }
+}
