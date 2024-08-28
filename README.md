@@ -1,5 +1,6 @@
 # cxml-php
-[![Packagist](https://img.shields.io/packagist/cloudonix/cxml-php/sdk.svg)](https://packagist.org/packages/cloudonix/cxml-php)
+![Contributors](https://img.shields.io/github/contributors-anon/cloudonix/cxml-php)
+[![Packagist](https://img.shields.io/packagist/v/cloudonix/cxml-php)](https://packagist.org/packages/cloudonix/cxml-php)
 
 ## Documentation
 
