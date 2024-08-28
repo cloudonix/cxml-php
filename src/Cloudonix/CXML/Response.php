@@ -55,6 +55,7 @@ class Response extends CompoundVerb
             case "PLAY":
             case "PAUSE":
             case "REDIRECT":
+            case "STREAM":
                 return $this->payloadArray[] = (new SimpleVerb($method))->content($args);
                 break;
             case "GATHER":
