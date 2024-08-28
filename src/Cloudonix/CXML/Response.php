@@ -46,11 +46,11 @@ final class Response
      *
      * @param string $content
      *
-     * @return \Cloudonix\CXML\SimpleVerb|\Cloudonix\CXML\CompoundVerb|bool
+     * @return \Cloudonix\CXML\SimpleVerb
      */
-    public function play(string $content): SimpleVerb|CompoundVerb|bool
+    public function play(string $content): SimpleVerb
     {
-        return $this->addVerb("play")->content($content);
+        return $this->appendVerb((new SimpleVerb("play"))->content($content));
     }
 
     /**
@@ -58,21 +58,21 @@ final class Response
      *
      * @param string $content
      *
-     * @return \Cloudonix\CXML\SimpleVerb|\Cloudonix\CXML\CompoundVerb|bool
+     * @return \Cloudonix\CXML\SimpleVerb
      */
-    public function dial(string $content): SimpleVerb|CompoundVerb|bool
+    public function dial(string $content): SimpleVerb
     {
-        return $this->addVerb("dial")->content($content);
+        return $this->appendVerb((new SimpleVerb("dial"))->content($content));
     }
 
     /**
      * Add a `<HANGUP>` Verb to CXML Response.
      *
-     * @return \Cloudonix\CXML\SimpleVerb|\Cloudonix\CXML\CompoundVerb|bool
+     * @return \Cloudonix\CXML\SimpleVerb
      */
-    public function hangup(): SimpleVerb|CompoundVerb|bool
+    public function hangup(): SimpleVerb
     {
-        return $this->addVerb("hangup");
+        return $this->appendVerb(new SimpleVerb("hangup"));
     }
 
     /**
@@ -80,11 +80,11 @@ final class Response
      *
      * @param array $content
      *
-     * @return SimpleVerb|CompoundVerb|bool
+     * @return CompoundVerb
      */
-    public function gather(array $content): SimpleVerb|CompoundVerb|bool
+    public function gather(array $content): CompoundVerb
     {
-        return $this->addVerb("gather")->content($content);
+        return $this->appendVerb((new CompoundVerb("hangup"))->content($content));
     }
 
     /**
@@ -92,11 +92,11 @@ final class Response
      *
      * @param string $content
      *
-     * @return SimpleVerb|CompoundVerb|bool
+     * @return SimpleVerb
      */
-    public function redirect(string $content): SimpleVerb|CompoundVerb|bool
+    public function redirect(string $content): SimpleVerb
     {
-        return $this->addVerb("redirect")->content($content);
+        return $this->appendVerb((new SimpleVerb("redirect"))->content($content));
     }
 
     /**
@@ -104,21 +104,21 @@ final class Response
      *
      * @param array $content
      *
-     * @return \Cloudonix\CXML\SimpleVerb|\Cloudonix\CXML\CompoundVerb|bool
+     * @return \Cloudonix\CXML\CompoundVerb
      */
-    public function start(array $content): SimpleVerb|CompoundVerb|bool
+    public function start(array $content): CompoundVerb
     {
-        return $this->addVerb("start")->content($content);
+        return $this->appendVerb((new CompoundVerb("start"))->content($content));
     }
 
     /**
      * Add a `<PAUSE>` Verb to CXML Response.
      *
-     * @return \Cloudonix\CXML\SimpleVerb|\Cloudonix\CXML\CompoundVerb|bool
+     * @return \Cloudonix\CXML\SimpleVerb
      */
-    public function pause(): SimpleVerb|CompoundVerb|bool
+    public function pause(): SimpleVerb
     {
-        return $this->addVerb("pause");
+        return $this->appendVerb(new SimpleVerb("pause"));
     }
 
     /**
@@ -126,40 +126,33 @@ final class Response
      *
      * @param array $content
      *
-     * @return \Cloudonix\CXML\SimpleVerb|\Cloudonix\CXML\CompoundVerb|bool
+     * @return \Cloudonix\CXML\CompoundVerb
      */
-    public function record(array $content): SimpleVerb|CompoundVerb|bool
+    public function record(array $content): CompoundVerb
     {
-        return $this->addVerb("record")->content($content);
+        return $this->appendVerb((new CompoundVerb("record"))->content($content));
     }
 
     /**
      * Add a `<REJECT>` Verb to CXML Response.
      *
-     * @return \Cloudonix\CXML\SimpleVerb|\Cloudonix\CXML\CompoundVerb|bool
+     * @return \Cloudonix\CXML\SimpleVerb
      */
-    public function reject(): SimpleVerb|CompoundVerb|bool
+    public function reject(): SimpleVerb
     {
-        return $this->addVerb("reject");
+        return $this->appendVerb(new SimpleVerb("reject"));
     }
 
     /**
-     * Add a CXML Verb to CXML Response
+     * Append a CXML Verb to CXML Response
      *
      * @param string $verbName
      *
      * @return \Cloudonix\CXML\SimpleVerb|\Cloudonix\CXML\CompoundVerb|bool
      */
-    private function addVerb(string $verbName): SimpleVerb|CompoundVerb|bool
+    private function appendVerb($verbObject): SimpleVerb|CompoundVerb|bool
     {
-        $verbValidator = new Verbs();
-        if ($verbValidator->is_simple($verbName)) {
-            $verb = new SimpleVerb($verbName);
-        } else if ($verbValidator->is_compound($verbName)) {
-            $verb = new CompoundVerb($verbName);
-        } else return false;
-
-        $this->payloadArray[] = $verb;
+        $this->payloadArray[] = $verbObject;
         return $this->payloadArray[count($this->payloadArray) - 1];
     }
 

@@ -44,11 +44,11 @@ class SimpleVerb implements VerbInterface
      *
      * @param string $content
      *
-     * @return CompoundVerb|bool|$this
+     * @return SimpleVerb
      */
-    public function play(string $content): SimpleVerb|CompoundVerb|bool
+    public function play(string $content): SimpleVerb
     {
-        return $this->setVerb("play")->content($content);
+        return (new SimpleVerb("play"))->content($content);
     }
 
     /**
@@ -56,21 +56,21 @@ class SimpleVerb implements VerbInterface
      *
      * @param string $content
      *
-     * @return CompoundVerb|bool|$this
+     * @return SimpleVerb
      */
-    public function dial(string $content): SimpleVerb|CompoundVerb|bool
+    public function dial(string $content): SimpleVerb
     {
-        return $this->setVerb("dial")->content($content);
+        return (new SimpleVerb("dial"))->content($content);
     }
 
     /**
      * Create a `<HANGUP>` Verb object
      *
-     * @return SimpleVerb|CompoundVerb|bool
+     * @return SimpleVerb
      */
-    public function hangup(): SimpleVerb|CompoundVerb|bool
+    public function hangup(): SimpleVerb
     {
-        return $this->setVerb("hangup");
+        return (new SimpleVerb("hangup"));
     }
 
     /**
@@ -78,43 +78,31 @@ class SimpleVerb implements VerbInterface
      *
      * @param string $content
      *
-     * @return CompoundVerb|bool|$this
+     * @return SimpleVerb
      */
-    public function redirect(string $content): SimpleVerb|CompoundVerb|bool
+    public function redirect(string $content): SimpleVerb
     {
-        return $this->setVerb("redirect")->content($content);
+        return (new SimpleVerb("redirect"))->content($content);
     }
 
     /**
      * Create a `<PAUSE>` Verb object
      *
-     * @return SimpleVerb|CompoundVerb|bool
+     * @return SimpleVerb
      */
-    public function pause(): SimpleVerb|CompoundVerb|bool
+    public function pause(): SimpleVerb
     {
-        return $this->setVerb("pause");
+        return (new SimpleVerb("pause"));
     }
 
     /**
      * Create a `<REJECT>` Verb object
      *
-     * @return SimpleVerb|CompoundVerb|bool
-     */
-    public function reject(): SimpleVerb|CompoundVerb|bool
-    {
-        return $this->setVerb("reject");
-    }
-
-    /**
-     * Create a generic CXML Verb Object
-     *
-     * @param string $verbName
-     *
      * @return SimpleVerb
      */
-    private function setVerb(string $verbName): SimpleVerb
+    public function reject(): SimpleVerb
     {
-        return new SimpleVerb($verbName);
+        return (new SimpleVerb("reject"));
     }
 
     /**
