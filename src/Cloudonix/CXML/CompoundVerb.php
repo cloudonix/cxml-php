@@ -53,17 +53,17 @@ class CompoundVerb implements VerbInterface
     /**
      * Set content for the created CXML Verb.
      *
-     * @param SimpleVerb|array|null $verbObject
+     * @param array|null $verbObjects
      *
      * @return $this
      */
-    public function content(SimpleVerb|array|null $verbObject): self
+    public function content(array|null $verbObjects): self
     {
-        if (!is_null($verbObject)) {
-            if (is_array($verbObject))
-                $this->verbContent = $verbObject;
-            else
+        if (!is_null($verbObjects)) {
+            $this->verbContent = [];
+            foreach ($verbObjects[0] as $verbObject) {
                 $this->verbContent[] = $verbObject;
+            }
         }
         return $this;
     }
@@ -84,16 +84,13 @@ class CompoundVerb implements VerbInterface
             $verbAttributesIndex++;
             if ($verbAttributesIndex < count($this->verbAttributes)) $verbAttributesText .= " ";
         }
+
         if (!is_null($this->verbContent)) {
-            if (!is_array($this->verbContent)) {
-                return "<" . $this->verbName . $verbAttributesText .">\n" . $this->verbContent . "\n</" . $this->verbName .">";
-            } else {
-                $nestedVerbs = "";
-                foreach ($this->verbContent as $nestedVerb) {
-                    $nestedVerbs .= "    " . $nestedVerb . "\n";
-                }
-                return "<" . $this->verbName . $verbAttributesText .">\n" . $nestedVerbs . "  </" . $this->verbName .">";
+            $nestedVerbs = "";
+            foreach ($this->verbContent as $nestedVerb) {
+                $nestedVerbs .= "\n    " . $nestedVerb;
             }
+            return "<" . $this->verbName . $verbAttributesText .">" . $nestedVerbs . "\n  </" . $this->verbName .">";
         } else {
             return "<" . $this->verbName . " ". $verbAttributesText ."/>";
         }

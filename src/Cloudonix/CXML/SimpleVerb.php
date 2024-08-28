@@ -140,9 +140,11 @@ class SimpleVerb implements VerbInterface
     {
         $verbAttributesText = "";
         $verbAttributesIndex = 0;
+
         if (count($this->verbAttributes) > 0) {
             $verbAttributesText .= " ";
         }
+
         foreach ($this->verbAttributes as $attribute => $value) {
             $verbAttributesText .= "${attribute}=\"${value}\"";
             $verbAttributesIndex++;
@@ -150,11 +152,19 @@ class SimpleVerb implements VerbInterface
                 $verbAttributesText .= " ";
             }
         }
+
         if (!is_null($this->verbContent)) {
             if (!is_array($this->verbContent)) {
                 return "<" . $this->verbName . $verbAttributesText . ">" . $this->verbContent . "</" . $this->verbName . ">";
             } else {
-                return "<" . $this->verbName . $verbAttributesText . ">" . implode(" ", $this->verbContent) . "</" . $this->verbName . ">";
+                if (count($this->verbContent)) {
+                    return "<" . $this->verbName . $verbAttributesText . ">" . implode(
+                            " ",
+                            $this->verbContent
+                        ) . "</" . $this->verbName . ">";
+                } else {
+                    return "<" . $this->verbName . $verbAttributesText . " />";
+                }
             }
         } else {
             return "<" . $this->verbName . $verbAttributesText . " />";
